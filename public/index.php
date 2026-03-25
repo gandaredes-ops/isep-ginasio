@@ -30,10 +30,10 @@
             <nav-links>
                 <a href="#quem-somos">Quem somos</a>
                 <a href="#nossa-equipa">A Nossa Equipa</a>
-                <a href="#serviços">Serviços</a>
+                <a href="#servicos">Serviços</a>
                 <a href="#aula-grupo">Aulas de grupo</a>
-                <a href="precario">Preçário</a>
-                <a href="#contacto">Contacto</a> <!-- NOVO LINK -->
+                <a href="#precario">Preçário</a>
+                <a href="#contacto">Contacto</a>
             </nav-links>
         </div>
         <!-- Area Cliente -->
