@@ -19,7 +19,7 @@ $nome = $_SESSION['utilizador'];
     <div class="col-6 d-flex align-items-center p-3">
         <div class="row align-items-center">
             <!-- Logo e Nome -->
-            <a href="area_pessoal.html">
+            <a href="/isep-ginasio/private/home.php">
                 <img alt="Logo do ISEP Ginásio" height="50" src="/isep-ginasio/private/assets/img/gym125_white.png" class="me-3">
             </a>
             <h3 class="mb-0"><?php echo APP_NAME; ?></h3>
@@ -36,7 +36,7 @@ $nome = $_SESSION['utilizador'];
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="login_form.html"><i
+                    <li><a class="dropdown-item" href="/isep-ginasio/public/logout.php"><i
                                 class="fa-solid fa-right-from-bracket me-2"></i>Sair</a></li>
                 </ul>
             </div>

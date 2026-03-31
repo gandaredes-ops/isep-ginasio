@@ -38,7 +38,7 @@ if (!empty($_SESSION['server_error'])) {
                 <div class="row">
                     <div class="col">
                         <!-- Formulário -->
-                        <form action="../private/index.php" method="post">
+                        <form action="../private/processa_login.php" method="post">
                             <div class="mb-3">
                                 <!-- Utilizador -->
                                 <label for="email" class="form-label">Utilizador</label>
