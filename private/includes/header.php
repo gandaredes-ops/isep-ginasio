@@ -22,3 +22,5 @@ require_once __DIR__ . '/../../config/config.php';
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/isep-ginasio/private/assets/fontawesome/all.min.css">
 </head>
+
+<body>
