@@ -20,7 +20,7 @@ $nome = $_SESSION['utilizador'];
         <div class="row align-items-center">
             <!-- Logo e Nome -->
             <a href="/isep-ginasio/private/home.php">
-                <img alt="Logo do ISEP Ginásio" height="50" src="/isep-ginasio/private/assets/img/gym125_white.png" class="me-3">
+                <img alt="Logo do ISEP Ginásio" height="50" src="/isep-ginasio/private/assets/images/gym125_white.png" class="me-3">
             </a>
             <h3 class="mb-0"><?php echo APP_NAME; ?></h3>
         </div>

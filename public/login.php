@@ -32,7 +32,7 @@ if (!empty($_SESSION['server_error'])) {
             <div class="card p-4">
                 <div class="d-flex align-items-center justify-content-center my-4">
                     <!-- Imagem do ginásio + texto -->
-                    <img src="/isep-ginasio/private/assets/img/gym125.png" class="img-fluid me-3" alt="Logotipo do ginásio">
+                    <img src="/isep-ginasio/private/assets/images/gym125.png" class="img-fluid me-3" alt="Logotipo do ginásio">
                     <h2><strong><?php echo APP_NAME; ?></strong></h2>
                 </div>
                 <div class="row">

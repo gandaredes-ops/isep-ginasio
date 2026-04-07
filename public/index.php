@@ -7,6 +7,8 @@
     <title>ISCAP Ginásio</title>
     <!--  favicon  -->
     <link rel="shortcut icon" href="assets/images/gym255_white.png" type="image/png">
+    <!--  estilos de página  -->
+    <link rel="stylesheet" href="assets/css/estilos.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,8 +16,7 @@
         rel="stylesheet">
     <!-- Font Awesome (local) -->
     <link rel="stylesheet" href="assets/fontawesome/all.min.css">
-    <!--  estilos de página  -->
-    <link rel="stylesheet" href="assets/css/estilos.css">
+
 </head>
 
 <body>
