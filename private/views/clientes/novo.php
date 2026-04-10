@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 | Profissão: $profissao</p>";
     // 2. VALIDAR OS DADOS
     $erros = []; // Array para armazenar mensagens de erro
+    $erro_sistema = "Erro ao gravar os dados: " . $err->getMessage(); // Para erros de SQL (PDO)
     $nome = trim($nome);
     $morada = trim($morada);
     $cp = trim($cp);
@@ -84,11 +85,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = strtolower($email); // guimas@email.pt
     $sistema = strtoupper($sistema); // ADSE
     $profissao = ucwords(strtolower($profissao)); // Professor
+    $dnasc = $_POST["dnasc_cliente"] ?? "";
+    $dnasc = trim($dnasc);
+    if (empty($dnasc)) {
+        $erros[] = "O campo Data de Nascimento é obrigatório.";
+    }
+    // Validação de formato: AAAA-MM-DD
+    elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $dnasc)) {
+        $erros[] = "Formato de data inválido. Use AAAA-MM-DD.";
+    }
+    // Verificar se é uma data real (ex: não aceitar 2024-02-31)
+    else {
+        $partes = explode('-', $dnasc);
+        if (!checkdate((int)$partes[1], (int)$partes[2], (int)$partes[0])) {
+            $erros[] = "Data de nascimento inválida.";
+        }
+    }
+    if (empty($erros)) {
+        try {
+            $ligacao = new PDO(
+                "mysql:host=" . MYSQL_HOST . ";dbname=" . MYSQL_DATABASE . ";charset=utf8",
+                MYSQL_USERNAME,
+                MYSQL_PASSWORD
+            );
+            $sql = "INSERT INTO clientes (
+                nome, sexo, data_nascimento, email, telefone, morada, cidade, cliente_ativo, sistema_saude
+            ) VALUES (
+                :nome, :sexo, :dnasc, :email, :telefone, :morada, :cidade, '1', :sistema
+            )";
+            $stmt = $ligacao->prepare($sql);
+            $stmt->execute([
+                ':nome' => $nome,
+                ':sexo' => $_POST['radio_gender'],
+                ':dnasc' => $dnasc,
+                ':email' => $email,
+                ':telefone' => $telefone,
+                ':morada' => $morada,
+                ':cidade' => $cidade,
+                ':sistema' => $sistema
+            ]);
+            header('Location: lista.php');
+            exit;
+        } catch (PDOException $err) {
+            $erros = "Erro ao gravar os dados: " . $err->getMessage();
+        }
+        $ligacao = null;
+    }
     // 3. Se não houver erros, guardar na base de dados
-    // 4. Depuração: mostrar os erros recolhidos
+    // 4. Depuração: mostrar os erros recolhidos~
+    /*
     echo "<pre>"; // torna mais legível no browser
     print_r($erros);
     echo "</pre>";
+    */
 }
 include '../../includes/header.php';
 include '../../includes/nav.php'; ?>
@@ -166,9 +215,9 @@ include '../../includes/nav.php'; ?>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="texto_dnasc" class="form-label">Data de nascimento</label>
-                                    <input type="text" class="form-control" id="texto_dnasc" name="dnasc_cliente"
-                                        required>
+                                    <label for="data_nasc" class="form-label">Data de nascimento</label>
+                                    <input type="text" class="form-control" id="data_nasc" name="dnasc_cliente"
+                                        value="<?= htmlspecialchars($_POST['dnasc_cliente'] ?? '') ?>" required>
                                 </div>
                             </div>
                             <!-- Estado Civil, Sistema de Saúde e Profissão -->
@@ -210,9 +259,22 @@ include '../../includes/nav.php'; ?>
                                 </button>
                             </div>
                             <!-- Área de erros -->
-                            <div class="alert alert-danger text-center" role="alert">
-                                • Erro
-                            </div>
+                            <?php if (!empty($erros)): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Foram encontrados os seguintes erros:</strong>
+                                    <ul class="mb-0">
+                                        <?php foreach ($erros as $erro): ?>
+                                            <li><?= htmlspecialchars($erro) ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (!empty($erro_sistema)): ?>
+                                <div class="alert alert-danger">
+                                    <strong>Erro:</strong>
+                                    <p><?= htmlspecialchars($erro_sistema) ?></p>
+                                </div>
+                            <?php endif; ?>
                         </form>
                     </div>
                 </div>
@@ -220,5 +282,10 @@ include '../../includes/nav.php'; ?>
         </main>
     </div>
 </div>
+<script>
+    flatpickr("#data_nasc", {
+        dateFormat: "Y-m-d"
+    });
+</script>
 
 <?php include '../../includes/footer.php'; ?>
